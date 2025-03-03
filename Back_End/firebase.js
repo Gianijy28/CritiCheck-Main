@@ -1,6 +1,6 @@
 // firebase.js (Inside Back_End folder)
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"; // If using Firebase Auth
+import { initializeApp } from "firebase/app"; 
+import { getAuth, onAuthStateChanged } from "firebase/auth"; // If using Firebase Auth
 import { getFirestore } from "firebase/firestore"; // If using Firestore
 import { getStorage } from "firebase/storage"; // If using Storage
 
@@ -21,5 +21,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+db.collection('todos').getDocs();
+const todosCol = collection(db, 'todos');
+const snapshot = await getDocs(todosCol);
 
 export { auth, db, storage };
+
+// Detect auth state
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("Logged in!");
+    } else {
+        console.log("No user");
+    }
+});

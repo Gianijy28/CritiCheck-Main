@@ -1,7 +1,14 @@
 import microsoft from "../assets/components/microsoft.png";
 import logo from "../assets/components/criticheck.png";
+import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "../../../Back_End/firebase"
 
 export default function Register() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  const auth = getAuth(app);
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen text-center bg-neutral-800">
       <div className="flex flex-col items-center justify-center w-full max-w-md">
@@ -22,6 +29,8 @@ export default function Register() {
             <label className="block text-white text-sm mb-1">Email</label>
             <input
               type="email"
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
@@ -31,6 +40,8 @@ export default function Register() {
             <label className="block text-white text-sm mb-1">Password</label>
             <input
               type="password"
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
