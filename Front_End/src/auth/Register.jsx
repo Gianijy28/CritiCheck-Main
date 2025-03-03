@@ -1,36 +1,45 @@
+import { useState } from "react";
+import { auth } from "../firebase/firebase"; // Correct import
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import microsoft from "../assets/components/microsoft.png";
 import logo from "../assets/components/criticheck.png";
-import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebase"; 
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
+  const [signupError, setSignupError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const auth = getAuth(app);
+  const handleSignup = async () => {
+    if (!email || !password) {
+      setSignupError("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User created:", userCredential.user);
+      setSuccessMessage("Account created successfully! Check Firebase Authentication.");
+      setSignupError('');
+    } catch (error) {
+      setSignupError(error.message);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen text-center bg-neutral-800">
       <div className="flex flex-col items-center justify-center w-full max-w-md">
         <img src={logo} alt="CritiCheck Logo" className="w-20 mb-6" />
         <h3 className="text-xl font-semibold text-white mb-5">Create an Account</h3>
 
-        <form className="bg-neutral-900 rounded-lg p-6 w-90 max-w-md shadow-lg border border-gray-700 text-left">
-          <div className="mb-4">
-            <label className="block text-white text-sm mb-1">Name</label>
-            <input
-              type="text"
-              placeholder="Enter your name"
-              className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-
+        <form className="bg-neutral-900 rounded-lg p-6 w-90 max-w-md shadow-lg border border-gray-700 text-left" onSubmit={(e) => e.preventDefault()}>
           <div className="mb-4">
             <label className="block text-white text-sm mb-1">Email</label>
             <input
               type="email"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
@@ -41,14 +50,18 @@ export default function Register() {
             <input
               type="password"
               value={password}
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-600 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
 
+          {signupError && <p className="text-red-500 text-sm mb-2">{signupError}</p>}
+          {successMessage && <p className="text-green-500 text-sm mb-2">{successMessage}</p>}
+
           <button
             type="button"
+            onClick={handleSignup}
             className="w-full py-2 bg-[#00FF7F] hover:bg-[#00CC66] text-black font-bold rounded transition shadow-lg"
           >
             Sign Up
