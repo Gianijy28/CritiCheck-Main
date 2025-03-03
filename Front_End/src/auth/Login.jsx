@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { auth } from "../firebase/firebase"; // Import Firebase Auth
 import { signInWithEmailAndPassword } from "firebase/auth";
 import logo from "../assets/components/criticheck.png";
@@ -9,6 +10,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
+  
+  const navigate = useNavigate(); // Initialize navigation
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -23,7 +26,9 @@ export default function Login() {
       // Authenticate user
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in:", userCredential.user);
-      alert("Login successful!"); // You can redirect user here
+      
+      // Navigate to Dashboard after login
+      navigate("/dashboard", { replace: true }); 
     } catch (error) {
       setLoginError(error.message);
     }
