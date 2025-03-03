@@ -1,8 +1,7 @@
-// firebase.js (Inside Back_End folder)
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"; // If using Firebase Auth
-import { getFirestore } from "firebase/firestore"; // If using Firestore
-import { getStorage } from "firebase/storage"; // If using Storage
+import { initializeApp } from "firebase/app"; 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Firebase configuration
 const firebaseConfig = {
