@@ -10,7 +10,8 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
+  // Fix: Ensure paths match exactly with App.jsx routes
+  const isActive = (path) => location.pathname.startsWith(path);
 
   return (
     <div className="flex flex-row h-screen">
@@ -18,49 +19,50 @@ function Header() {
         <div className="flex flex-col items-center space-y-4">
           <img src={logo} alt="Logo" className="w-14 h-14 mb-6" />
 
+          {/* Dashboard Navigation */}
           <button
             className={`flex flex-col items-center justify-center w-22 h-18 cursor-pointer focus:outline-none ${
-              isActive("/dashboard")
-                ? "bg-teal-700 text-white border-l-4 border-teal-500"
-                : "text-teal-300"
+              isActive("/dashboard") ? "bg-teal-700 text-white border-l-4 border-teal-500" : "text-teal-300"
             } rounded-md`}
             onClick={() => navigate("/dashboard")}
           >
             <img src={dashboardIcon} alt="Dashboard" className="w-15 h-10" />
           </button>
+
+          {/* Classes Navigation */}
           <button
             className={`flex flex-col items-center justify-center w-22 h-18 cursor-pointer focus:outline-none ${
-              isActive("/classes")
-                ? "bg-teal-700 text-white border-l-4 border-teal-500"
-                : "text-teal-300"
+              isActive("/classes") ? "bg-teal-700 text-white border-l-4 border-teal-500" : "text-teal-300"
             } rounded-md`}
             onClick={() => navigate("/classes")}
           >
             <BsPeople size={30} />
           </button>
+
+          {/* Calendar Navigation */}
           <button
             className={`flex flex-col items-center justify-center w-22 h-18 cursor-pointer focus:outline-none ${
-              isActive("/calendar")
-                ? "bg-teal-700 text-white border-l-4 border-teal-500"
-                : "text-teal-300"
+              isActive("/calendar") ? "bg-teal-700 text-white border-l-4 border-teal-500" : "text-teal-300"
             } rounded-md`}
             onClick={() => navigate("/calendar")}
           >
             <BsCalendar size={30} />
           </button>
+
+          {/* Canvas Navigation */}
           <button
             className="flex flex-col items-center justify-center w-22 h-18 cursor-pointer text-teal-300 rounded-md focus:outline-none"
-            onClick={() => navigate("/canvas")}
+            onClick={() => window.open("https://feu.instructure.com/", "_blank")} // Opens in a new tab
           >
             <SiCanvas size={30} className="text-red-500" />
           </button>
         </div>
+
+        {/* Profile Navigation */}
         <div className="-mb-6">
           <button
             className={`flex items-center justify-center w-22 h-18 cursor-pointer focus:outline-none ${
-              isActive("/profile")
-                ? "bg-teal-700 text-white border-l-4 border-teal-500"
-                : "text-teal-300"
+              isActive("/profile") ? "bg-teal-700 text-white border-l-4 border-teal-500" : "text-teal-300"
             } rounded-md`}
             onClick={() => navigate("/profile")}
           >
