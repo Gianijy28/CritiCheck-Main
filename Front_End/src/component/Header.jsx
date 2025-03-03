@@ -52,7 +52,7 @@ function Header() {
           {/* Canvas Navigation */}
           <button
             className="flex flex-col items-center justify-center w-22 h-18 cursor-pointer text-teal-300 rounded-md focus:outline-none"
-            onClick={() => navigate("https://feu.instructure.com/")}
+            onClick={() => window.open("https://feu.instructure.com/", "_blank")} // Opens in a new tab
           >
             <SiCanvas size={30} className="text-red-500" />
           </button>
