@@ -1,7 +1,7 @@
 import microsoft from "../assets/components/microsoft.png";
 import logo from "../assets/components/criticheck.png";
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
-import { app } from "../../../Back_End/firebase"
+import { auth } from "../firebase/firebase"; 
 
 export default function Register() {
   const [email, setEmail] = useState('');
