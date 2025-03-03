@@ -17,6 +17,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* Protected Routes */}
         <Route
           path="/*"
           element={
@@ -27,6 +29,9 @@ function App() {
                   <Route path="/" element={<Navigate to="/dashboard" replace />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/classes" element={<Classes />} />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/profile" element={<h1 className='text-white'>Profile Page</h1>} />
+                  <Route path="/canvas" element={<h1 className='text-white'>Canvas Page</h1>} />
 
                   {/* Nested Class Dashboard Routes */}
                   <Route path="/dashboard/:classCode" element={<ClassDashboard />}>
@@ -35,8 +40,6 @@ function App() {
                     <Route path="technicals" element={<Technicals />} />
                     <Route path="grades" element={<Grades />} />
                   </Route>
-
-                  <Route path="/calendar" element={<Calendar />} />
                 </Routes>
               </div>
             </div>
